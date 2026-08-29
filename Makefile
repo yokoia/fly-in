@@ -1,24 +1,21 @@
+.PHONY: install run debug clean lint
 
-.PHONY: install run debug clean lint lint-strict
+MAP ?= $(FILE)
 
 install:
-    pip install flake8 mypy pygame
+	python3 -m pip install -r developer-deps.txt
 
 run:
-    python3 main.py $(FILE)
+	@test -n "$(MAP)" || (echo "Usage: make run MAP=../maps/easy/01_linear_path.txt" && exit 1)
+	python3 play.py "$(MAP)"
 
 debug:
-    python3 -m pdb main.py
+	@test -n "$(MAP)" || (echo "Usage: make debug MAP=../maps/easy/01_linear_path.txt" && exit 1)
+	python3 -m pdb play.py "$(MAP)"
 
 clean:
-    rm -rf pycache .mypy_cache .pytest_cache dist mazegen.egg-info
-    find . -type d -name "pycache" -exec rm -rf {} + 2>/dev/null  true
-    find . -type f -name "*.pyc" -delete 2>/dev/null  true
+	rm -rf __pycache__ .mypy_cache .pytest_cache
 
 lint:
-    flake8 .
-    mypy . --warn-return-any --warn-unused-ignores --ignore-missing-imports --disallow-untyped-defs --check-untyped-defs
-
-lint-strict:
-    flake8 .
-    mypy . --strict
+	flake8 .
+	mypy . --warn-return-any --warn-unused-ignores --ignore-missing-imports --disallow-untyped-defs --check-untyped-defs

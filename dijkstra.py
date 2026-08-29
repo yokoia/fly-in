@@ -5,7 +5,7 @@ from network import AirNetwork
 
 
 class RoutePlanner:
-    """Dijkstra to find shortest paths"""
+    """Finding the shortest paths"""
     def __init__(self, network: AirNetwork) -> None:
         self.network = network
 

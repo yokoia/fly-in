@@ -16,7 +16,7 @@ class Play:
     def launch() -> None:
         args = sys.argv[1:]
         if len(args) != 1:
-            print("Usage: make run MAP=<map_file>", file=sys.stderr)
+            print("Usage: make run <map_file>", file=sys.stderr)
             return
         file = args[0]
         if not Path(file).exists():

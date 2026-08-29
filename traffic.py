@@ -62,19 +62,20 @@ class Traffic:
     def turn(self) -> None:
         moves = []
         for drone in sorted(
-            self.drones, key=lambda item: item.position, reverse=True
+            self.drones, key=lambda drone: drone.position, reverse=True
             ):
             reserved = self._reserve_next_hub(drone)
             if reserved is not None:
                 moves.append(reserved)
         if not moves:
             raise RuntimeError("Simulation cannot make further progress")
-        self.passage_occup = dict.fromkeys(self.passage_occup, 0)
-        self._display(moves)
         for drone, crosse, _ in moves:
             drone.crossing = crosse
             if crosse is False:
                 drone.advance()
+        self._display(moves)
+        self.passage_occup = dict.fromkeys(self.passage_occup, 0)
+
 
     def play_turns(self) -> int:
         turns = 0

@@ -80,7 +80,7 @@ class MapParser:
         for item in data[1:-1].strip().split(): #["color=blue", "max_drones=1"]
             if "=" not in item:
                 raise MapError("Invalid option: missing =")
-            key, value = item.split("=", 1) #split only once = not multiple ===
+            key, value = item.split("=", 1)
             if not key or not value:
                 raise MapError("Invalid option")
             if key in result:
@@ -149,17 +149,17 @@ class MapParser:
             raise MapError(f"Duplicate connection: {left}-{right}")
 
         invalid = next((key for key in metadata if
-                        key != "max_link_capacity"), None)  # only max_link is allowed for connections
+                key != "max_link_capacity"), None)
         if invalid is not None:
             raise MapError(f"connection does not allow option: {invalid}")
 
         max_link = metadata.get("max_link_capacity", 1)
         if not isinstance(max_link, int):
-            raise MapError("max_link_capacity must be an integer")
+            raise MapError("max_link_capacity must be integers")
         if max_link <= 0:
             raise MapError("max_link_capacity must be > 0")
         self.scen.passages.append(Passage(left, right, max_link))
-        
+
     def decode(self, lines: list[str]) -> Scenario:
         self.scen = Scenario()
         counting = 0
@@ -170,6 +170,7 @@ class MapParser:
                 continue
             counting += 1
             if ":" not in line:
+                
                 raise MapError(f"Line {number}: missing ':'")
             command, payload = (part.strip() for part in line.split(":", 1))
             if command not in self.DATA:
