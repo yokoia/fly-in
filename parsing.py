@@ -113,7 +113,7 @@ class MapParser:
             maxd = metadata['max_drones']
             if not isinstance(maxd, int):
                 raise MapError("max_drones must be integer")
-            if maxd <= 0:
+            if maxd <= 0 and data not in {"start_hub", "end_hub"}:
                 raise MapError("max_drones must be > 0")
 
         sector = Sector(name, x, y)

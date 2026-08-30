@@ -1,14 +1,16 @@
 .PHONY: install run debug clean lint
 
+MAP ?= $(FILE)
+
 install:
 	python3 -m pip install -r developer-deps.txt
 
 run:
-	@test -n "$(MAP)" || (echo "Usage: make run MAP=<map_file>" && exit 1)
+	@test -n "$(MAP)" || (echo "Usage: make run MAP=../maps/easy/01_linear_path.txt" && exit 1)
 	python3 play.py "$(MAP)"
 
 debug:
-	@test -n "$(MAP)" || (echo "Usage: make debug MAP=<map_file>" && exit 1)
+	@test -n "$(MAP)" || (echo "Usage: make debug MAP=../maps/easy/01_linear_path.txt" && exit 1)
 	python3 -m pdb play.py "$(MAP)"
 
 clean:
