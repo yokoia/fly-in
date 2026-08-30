@@ -62,8 +62,7 @@ class Traffic:
     def turn(self) -> None:
         moves = []
         for drone in sorted(
-            self.drones, key=lambda drone: drone.position, reverse=True
-            ):
+            self.drones, key=lambda drone: drone.position, reverse=True):
             reserved = self._reserve_next_hub(drone)
             if reserved is not None:
                 moves.append(reserved)

@@ -155,7 +155,7 @@ class MapParser:
 
         max_link = metadata.get("max_link_capacity", 1)
         if not isinstance(max_link, int):
-            raise MapError("max_link_capacity must be integers")
+            raise MapError("max_link_capacity must be positive integer")
         if max_link <= 0:
             raise MapError("max_link_capacity must be > 0")
         self.scen.passages.append(Passage(left, right, max_link))
