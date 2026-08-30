@@ -20,16 +20,19 @@ class AirNetwork:
             self.neighbors[passage.right_s].append(passage.left_s)
 
     def reachable_neighbors(self, label: str) -> list[str]:
+        """Skip blocked areas"""
         return [ neighbor
             for neighbor in self.neighbors[label] if
             self.sectors[neighbor].meta_data['zone'] != "blocked"]
 
     def entry_cost(self, label: str) -> int:
+        """Ranking zones"""
         return ( 2
             if self.sectors[label].meta_data["zone"] == "restricted"
             else 1)
 
     def get_passage(self, a: str, b: str) -> Passage | None:
+        """find a connection"""
         for passage in self.passages:
             if {a, b} == {passage.left_s, passage.right_s}:
                 return passage

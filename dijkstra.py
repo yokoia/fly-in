@@ -5,13 +5,13 @@ from network import AirNetwork
 
 
 class RoutePlanner:
-    """Finding the shortest paths"""
+    """Finding paths"""
     def __init__(self, network: AirNetwork) -> None:
         self.network = network
 
     def shortest_route(self, connections: set[frozenset[str]]
         | None = None) -> list[str] | None:
-
+        """Finding shortest path"""
         avoid_connections = connections or set()
         scores: dict[str, float] = {
             key: float("inf") for key in self.network.sectors}
@@ -44,6 +44,7 @@ class RoutePlanner:
         return list(reversed(path))
 
     def find_multiple_routes(self, maximum: int) -> list[list[str]]:
+        """Finding multiple paths"""
         found_routes: list[list[str]] = []
         avoid_conn: set[frozenset[str]] = set()
 

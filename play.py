@@ -11,9 +11,10 @@ from traffic import Traffic
 
 
 class Play:
-    """Launching the program using the method class.launch()"""
+    """Launching the program using the method launch()"""
     @staticmethod
     def launch() -> None:
+        """Running the program"""
         args = sys.argv[1:]
         if len(args) != 1:
             print("Usage: make run <map_file>", file=sys.stderr)

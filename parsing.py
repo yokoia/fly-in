@@ -53,12 +53,14 @@ class MapParser:
 
     @staticmethod
     def load(source: str) -> list[str]:
+        """loading map file"""
         try:
             return Path(source).read_text(encoding="utf-8").splitlines()
         except OSError:
             raise MapError("Invalid file")
 
     def _nbdrones(self, nb: str) -> None:
+        """parsing nb_drones"""
         number = nb.split()
         if len(number) != 1:
             raise MapError("nb_drones must contain one number")
@@ -71,6 +73,7 @@ class MapParser:
 
     @staticmethod
     def _options(meta_data: list[str]) -> dict[str, Any]:
+        """parsing meta_data"""
         if not meta_data:
             return {}
         data = " ".join(meta_data).strip()
@@ -90,6 +93,7 @@ class MapParser:
         return result
 
     def _sector(self, data: str, payload: str) -> None:
+        """parsing hubs"""
         pieces = payload.split()
         if len(pieces) < 3:
             raise MapError(f"{data}: missing data")
@@ -129,6 +133,7 @@ class MapParser:
             self.scen.end = sector
 
     def _passage(self, payload: str) -> None:
+        """parsing connections"""
         if not payload:
             raise MapError("connection: missing data")
         bracket = payload.find("[")
@@ -161,6 +166,7 @@ class MapParser:
         self.scen.passages.append(Passage(left, right, max_link))
 
     def decode(self, lines: list[str]) -> Scenario:
+        """handling all possible errors"""
         self.scen = Scenario()
         counting = 0
         hubs_order = True

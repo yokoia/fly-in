@@ -10,6 +10,7 @@ ScheduledMove = tuple[Drone, bool, str]
 
 
 class Traffic:
+    """Simulation"""
     RESET = "\033[0m"
     PALETTE = {
         "black": 0, "blue": 21, "brown": 94, "crimson": 160,
@@ -32,6 +33,7 @@ class Traffic:
         self.hub_occup[network.start] = scenario.nb_drones
 
     def _reserve_next_hub(self, drone: Drone) -> ScheduledMove | None:
+        """Reserve a connection and a hub"""
         target_label = drone.next_hub
         if target_label is None:
             return None
@@ -60,7 +62,8 @@ class Traffic:
         return (drone, restric, f"D{drone.number}-{shown_target}")
 
     def turn(self) -> None:
-        moves = []
+        """moves that happen in a turn"""
+        moves: list[ScheduledMove]= []
         for drone in sorted(
             self.drones, key=lambda drone: drone.position, reverse=True):
             reserved = self._reserve_next_hub(drone)
@@ -77,6 +80,7 @@ class Traffic:
 
 
     def play_turns(self) -> int:
+        """start turns"""
         turns = 0
         while not all(drone.has_arrived for drone in self.drones):
             self.turn()
@@ -86,6 +90,7 @@ class Traffic:
 
     @classmethod
     def _paint(cls, text: str, color: object) -> str:
+        """coloring"""
         if not isinstance(color, str):
             return text
         colorr = color.lower()
@@ -95,7 +100,8 @@ class Traffic:
         return f"\033[38;5;{code}m{text}{cls.RESET}"
 
     def _display(self, moves: list[ScheduledMove]) -> None:
-        texts = []
+        """print colored moves"""
+        texts: list[str] = []
         for _, _, text in moves:
             target = text.rsplit("-", 1)[-1]
             target_color = self.network.sectors[target].meta_data["color"]

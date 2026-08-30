@@ -5,6 +5,7 @@ from dataclasses import dataclass
 
 @dataclass
 class Drone:
+    """Drone info"""
     number: int
     route: list[str]
     location: str
@@ -23,5 +24,6 @@ class Drone:
         return self.position == len(self.route) - 1
 
     def advance(self) -> None:
+        """moving the drone"""
         self.position += 1
         self.location = self.route[self.position]
