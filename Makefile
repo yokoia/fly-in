@@ -1,4 +1,4 @@
-.PHONY: install run debug clean lint lint-strict
+.PHONY: install run debug clean lint
 
 install:
 	python3 -m pip install -r developer-deps.txt
