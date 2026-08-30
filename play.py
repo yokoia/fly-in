@@ -11,7 +11,7 @@ from traffic import Traffic
 
 
 class Play:
-
+    """Launching the program using the method class.launch()"""
     @staticmethod
     def launch() -> None:
         args = sys.argv[1:]
